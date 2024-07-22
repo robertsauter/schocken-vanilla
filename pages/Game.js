@@ -1,5 +1,3 @@
-import { gameStateService } from '../services/GameStateService.js';
-
 export class Game extends HTMLElement {
 
     constructor() {
@@ -7,10 +5,15 @@ export class Game extends HTMLElement {
         this.attachShadow({ mode: 'open' }).innerHTML = `
            <schocken-reset-button></schocken-reset-button>
         `;
+    }
 
-        gameStateService.subscribeReset(() => {
-            console.log('RESETTED!');
-        });
+    connectedCallback() {
+        const resetButton = this.shadowRoot.querySelector('schocken-reset-button');
+        if (resetButton) {
+            resetButton.addEventListener('reset', () => {
+                console.log('RESETTED!');
+            });
+        }
     }
 }
 

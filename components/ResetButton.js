@@ -1,15 +1,19 @@
-import { gameStateService } from '../services/GameStateService.js';
-
 export class ResetButton extends HTMLElement {
+
+    #rotation = 0;
 
     constructor() {
         super();
+
+        this.handleReset = this.handleReset.bind(this);
+
         this.attachShadow({ mode: 'open' }).innerHTML = `
             <style>
                 .reset-button {
                     background-color: transparent;
                     border-style: none;
                     padding: 1rem;
+                    transition: transform 500ms;
                 }
                 .bounce-element {
                     background-color: var(--theme-yellow);
@@ -18,6 +22,10 @@ export class ResetButton extends HTMLElement {
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    transition: transform 75ms ease-in;
+                }
+                .bounce-element.expanded {
+                    transform: scale(1.1);
                 }
                 .reset-icon {
                     color: white;
@@ -43,11 +51,22 @@ export class ResetButton extends HTMLElement {
     }
 
     connectedCallback() {
-        const resetButton = this.shadowRoot.querySelector('.reset-button');
-        resetButton.addEventListener('click', () => {
-            gameStateService.emitReset();
-        });
+        this.shadowRoot.querySelector('.reset-button').addEventListener('click', this.handleReset);
     }
+
+    handleReset() {
+        const bounceElement = this.shadowRoot.querySelector('.bounce-element');
+        bounceElement.classList.add('expanded');
+        const resetButton = this.shadowRoot.querySelector('.reset-button');
+        this.#rotation += 180;
+        resetButton.style.transform = `rotate(${this.#rotation}deg)`;
+        setTimeout(() => {
+            bounceElement.classList.remove('expanded');
+        }, 75);
+
+        const resetEvent = new CustomEvent('reset', { composed: true });
+        this.shadowRoot.dispatchEvent(resetEvent);
+    };
 }
 
 customElements.define('schocken-reset-button', ResetButton);
