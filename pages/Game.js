@@ -1,9 +1,16 @@
+import { gameStateService } from '../services/GameStateService.js';
+
 export class Game extends HTMLElement {
+
     constructor() {
         super();
         this.attachShadow({ mode: 'open' }).innerHTML = `
-           <schocken-top-actions></schocken-top-actions>
+           <schocken-reset-button></schocken-reset-button>
         `;
+
+        gameStateService.subscribeReset(() => {
+            console.log('RESETTED!');
+        });
     }
 }
 
