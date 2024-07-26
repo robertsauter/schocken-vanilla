@@ -4,6 +4,7 @@ export class Game extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' }).innerHTML = `
            <schocken-reset-button></schocken-reset-button>
+           <schocken-menu></schocken-menu>
         `;
     }
 

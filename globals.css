@@ -2,5 +2,49 @@ html {
     font-family: Arial, sans-serif;
 
     --theme-yellow: #ffb703;
+    --theme-dark-blue: #023047;
+    --theme-light: white;
+    --theme-dark: black;
+
+    --theme-background: var(--theme-light);
+
+    --theme-menu-background: var(--theme-dark-blue);
+    --theme-menu-text: var(--theme-light);
 }
 
+[data-theme="dark"] {
+    --theme-background: var(--theme-dark-blue);
+
+    --theme-menu-background: var(--theme-light);
+    --theme-menu-text: var(--theme-dark-blue);
+}
+
+button {
+    font-size: 1rem;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.menu-button {
+    border-style: none;
+    background-color: transparent;
+    padding: 1.5rem;
+}
+
+.menu-button .menu-button-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+@media (min-width: 640px) {
+    .menu-button .menu-button-icon {
+        width: 2rem;
+        height: 2rem;
+    }
+}
