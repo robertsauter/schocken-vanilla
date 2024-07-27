@@ -5,11 +5,15 @@ html {
     --theme-dark-blue: #023047;
     --theme-light: white;
     --theme-dark: black;
+    --theme-orange: #fb8500;
 
     --theme-background: var(--theme-light);
 
     --theme-menu-background: var(--theme-dark-blue);
     --theme-menu-text: var(--theme-light);
+
+    --theme-switch: lightgray;
+    --theme-switch-active: var(--theme-yellow);
 }
 
 [data-theme="dark"] {
@@ -17,6 +21,9 @@ html {
 
     --theme-menu-background: var(--theme-light);
     --theme-menu-text: var(--theme-dark-blue);
+
+    --theme-switch: gray;
+    --theme-switch-active: var(--theme-orange);
 }
 
 button {
@@ -42,9 +49,26 @@ a {
     height: 1.5rem;
 }
 
-@media (min-width: 640px) {
+.menu-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--theme-menu-text);
+}
+
+@media(min-width: 640px) {
     .menu-button .menu-button-icon {
         width: 2rem;
         height: 2rem;
+    }
+
+    .menu-title {
+        font-size: 2.25rem;
+    }
+}
+
+@media(min-width: 768px) {
+    .menu-title {
+        font-size: 3rem;
     }
 }

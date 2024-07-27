@@ -4,7 +4,7 @@ export class Menu extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' }).innerHTML = `
             <style>
-               @import url('/globals.css');
+                @import url('/globals.css');
 
                 .menu-wrapper {
                     position: absolute;
@@ -24,7 +24,7 @@ export class Menu extends HTMLElement {
                 }
                 .menu-button .menu-button-icon {
                     color: var(--theme-menu-text);
-                } 
+                }
                 .main-menu {
                     display: flex;
                     flex-direction: column;
@@ -35,36 +35,10 @@ export class Menu extends HTMLElement {
                 .menu-item {
                     width: 100%;
                 }
-                .menu-title {
-                    font-size: 1.875rem;
-                    font-weight: 700;
-                    text-align: center;
-                    color: var(--theme-menu-text);
-                }
-                .switch {
-                    display: flex;
-                    align-items: center;
-                    border-radius: 9999px;
-                    padding: 0.25rem;
-                }
-                .slider {
-                    border-radius: 9999px;
-                    width: 1.5rem;
-                    height: 1.5rem;
-                }
 
-                @media (min-width: 640) {
+                @media(min-width: 640) {
                     .menu-button-wrapper {
                         padding: 0 4rem;
-                    }
-                    .menu-title {
-                        font-size: 2.25rem;
-                    }
-                }
-
-                @media (min-width: 768px) {
-                    .menu-title {
-                        font-size: 3rem;
                     }
                 }
             </style>
@@ -78,19 +52,13 @@ export class Menu extends HTMLElement {
                 </div>
                 <menu class="main-menu">
                     <li class="menu-item">
-                        <details class="expandable">
+                        <details>
                             <summary class="menu-title">Theme</summary>
                             <schocken-theme-selection></schocken-theme-selection>
                         </details>
                     </li>
                     <li>
-                        <label class="switch-wrapper">
-                            <span class="menu-title">Spezial Modus</span>
-                            <input type="checkbox" />
-                            <div class="switch">
-                                <div class="slider"></div>
-                            </div>
-                        </label>
+                        <schocken-special-mode-switch></schocken-special-mode-switch>
                     </li>
                     <li>
                         <a href="/impressum" class="menu-title">Impressum</a>

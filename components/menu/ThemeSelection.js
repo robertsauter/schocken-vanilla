@@ -7,7 +7,7 @@ export class ThemeSelection extends HTMLElement {
                @import url('/globals.css');
 
                 .themes-wrapper {
-                    background-color: var(--theme-light);
+                    background-color: var(--theme-background);
                     display: grid;
                     grid-template-columns: repeat(2, minmax(0, 1fr));
                     gap: 1rem;
