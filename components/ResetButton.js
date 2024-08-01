@@ -68,7 +68,7 @@ export class ResetButton extends HTMLElement {
             bounceElement.classList.remove('expanded');
         }, 75);
 
-        const resetEvent = new CustomEvent('reset', { composed: true });
+        const resetEvent = new Event('reset', { composed: true });
         this.shadowRoot.dispatchEvent(resetEvent);
     };
 }

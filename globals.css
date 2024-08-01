@@ -26,6 +26,10 @@ html {
     --theme-switch-active: var(--theme-orange);
 }
 
+body {
+    margin: 0;
+}
+
 button {
     font-size: 1rem;
 }

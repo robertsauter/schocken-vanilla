@@ -7,9 +7,6 @@ export class Menu extends HTMLElement {
                 @import url('/globals.css');
 
                 .menu-wrapper {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
                     width: 100%;
                     height: 100%;
                     background-color: var(--theme-menu-background);
@@ -20,7 +17,7 @@ export class Menu extends HTMLElement {
                 .menu-button-wrapper {
                     display: flex;
                     justify-content: end;
-                    padding: 0 1.5rem;
+                    padding: 0 0.5rem;
                 }
                 .menu-button .menu-button-icon {
                     color: var(--theme-menu-text);
@@ -44,7 +41,7 @@ export class Menu extends HTMLElement {
             </style>
             <div class="menu-wrapper">
                 <div class="menu-button-wrapper">
-                    <button class="menu-button">
+                    <button class="menu-button close-menu-button">
                         <svg class="menu-button-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                         </svg>
@@ -66,6 +63,13 @@ export class Menu extends HTMLElement {
                 </menu>
             </div>
         `;
+    }
+
+    connectedCallback() {
+        this.shadowRoot.querySelector('.close-menu-button').addEventListener('click', () => {
+            const closeEvent = new Event('close', { composed: true });
+            this.shadowRoot.dispatchEvent(closeEvent);
+        });
     }
 }
 
