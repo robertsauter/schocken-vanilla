@@ -1,3 +1,5 @@
+import { Dices } from '../components/Dices.js';
+
 export class Game extends HTMLElement {
 
     einsenAmount = 0;
@@ -77,7 +79,7 @@ export class Game extends HTMLElement {
                         <schocken-einsen></schocken-einsen>
                     </div>
                     <div class="reveal-button-wrapper">
-                        <schocken-reveal-button></schocken-reveal-button>
+                        <schocken-dices></schocken-dices>
                     </div>
                 </main>
                 <dialog class="menu-dialog">
@@ -105,7 +107,11 @@ export class Game extends HTMLElement {
 
         this.shadowRoot
             .querySelector('schocken-reveal-button')
-            .addEventListener('reveal', () => console.log('Revealed!'));
+            ?.addEventListener('reveal', () => console.log('Revealed!'));
+
+        /** @type {Dices} */
+        const dices = this.shadowRoot.querySelector('schocken-dices');
+        dices.dicesAmount = 3;
     }
 }
 

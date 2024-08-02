@@ -4,7 +4,7 @@ export class Einsen extends HTMLElement {
     set dicesAmount(amount) {
         let template = '';
         for (let i = 0; i < amount; i++) {
-            template += '<div class="dice"><div class="dot"></div></div>';
+            template += `<div class="dice"><div class="dot"></div></div>`;
         }
         this.shadowRoot.querySelector('.dices-wrapper').innerHTML = template;
     }
