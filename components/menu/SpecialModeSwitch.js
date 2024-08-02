@@ -49,16 +49,18 @@ export class SpecialModeSwitch extends HTMLElement {
     }
 
     connectedCallback() {
-        this.shadowRoot.querySelector('.special-mode-input').addEventListener('change', (e) => {
-            const switchElement = this.shadowRoot.querySelector('.switch');
-            if (e.target.checked) {
-                switchElement.classList.add('active');
-            }
-            else {
-                switchElement.classList.remove('active');
-            }
-            localStorage.setItem('specialMode', e.target.checked);
-        });
+        this.shadowRoot
+            .querySelector('.special-mode-input')
+            .addEventListener('change', (e) => {
+                const switchElement = this.shadowRoot.querySelector('.switch');
+                if (e.target.checked) {
+                    switchElement.classList.add('active');
+                }
+                else {
+                    switchElement.classList.remove('active');
+                }
+                localStorage.setItem('specialMode', e.target.checked);
+            });
     }
 }
 

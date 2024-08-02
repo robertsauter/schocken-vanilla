@@ -6,24 +6,32 @@ html {
     --theme-light: white;
     --theme-dark: black;
     --theme-orange: #fb8500;
+    --theme-light-blue: #8ecae6;
+    --theme-blue: #219ebc;
 
     --theme-background: var(--theme-light);
+    --theme-text: var(--theme-dark);
 
     --theme-menu-background: var(--theme-dark-blue);
     --theme-menu-text: var(--theme-light);
 
     --theme-switch: lightgray;
     --theme-switch-active: var(--theme-yellow);
+
+    --theme-reveal-button: var(--theme-blue);
 }
 
 [data-theme="dark"] {
     --theme-background: var(--theme-dark-blue);
+    --theme-text: var(--theme-light);
 
     --theme-menu-background: var(--theme-light);
     --theme-menu-text: var(--theme-dark-blue);
 
     --theme-switch: gray;
     --theme-switch-active: var(--theme-orange);
+
+    --theme-reveal-button: var(--theme-orange);
 }
 
 body {

@@ -50,27 +50,27 @@ export class ThemeSelection extends HTMLElement {
     }
 
     connectedCallback() {
-        let initialTheme = localStorage.getItem('theme');
-        if (!initialTheme) {
-            initialTheme = 'light';
-        }
+        const savedTheme = localStorage.getItem('theme');
+        const initialTheme = savedTheme ?? 'light';
         document.documentElement.setAttribute('data-theme', initialTheme);
 
 
-        this.shadowRoot.querySelectorAll('.theme-button').forEach((themeButton) => {
-            if (initialTheme === themeButton.getAttribute('data-variant')) {
-                themeButton.classList.add('active');
-            }
+        this.shadowRoot
+            .querySelectorAll('.theme-button')
+            .forEach((themeButton) => {
+                if (initialTheme === themeButton.getAttribute('data-variant')) {
+                    themeButton.classList.add('active');
+                }
 
-            themeButton.addEventListener('click', (e) => {
-                /** @type {string} */
-                const selectedTheme = e.target.dataset.variant;
-                document.documentElement.setAttribute('data-theme', selectedTheme);
-                this.shadowRoot.querySelector('.theme-button.active').classList.remove('active');
-                e.target.classList.add('active');
-                localStorage.setItem('theme', selectedTheme);
+                themeButton.addEventListener('click', () => {
+                    /** @type {string} */
+                    const selectedTheme = themeButton.dataset.variant;
+                    document.documentElement.setAttribute('data-theme', selectedTheme);
+                    this.shadowRoot.querySelector('.theme-button.active').classList.remove('active');
+                    themeButton.classList.add('active');
+                    localStorage.setItem('theme', selectedTheme);
+                });
             });
-        });
     }
 }
 
