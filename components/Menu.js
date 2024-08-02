@@ -2,6 +2,8 @@ export class Menu extends HTMLElement {
 
     constructor() {
         super();
+        this.handleCloseButtonClick = this.handleCloseButtonClick.bind(this);
+
         this.attachShadow({ mode: 'open' }).innerHTML = `
             <style>
                 @import url('/globals.css');
@@ -66,10 +68,14 @@ export class Menu extends HTMLElement {
     }
 
     connectedCallback() {
-        this.shadowRoot.querySelector('.close-menu-button').addEventListener('click', () => {
-            const closeEvent = new Event('close', { composed: true });
-            this.shadowRoot.dispatchEvent(closeEvent);
-        });
+        this.shadowRoot
+            .querySelector('.close-menu-button')
+            .addEventListener('click', this.handleCloseButtonClick);
+    }
+
+    handleCloseButtonClick() {
+        const closeEvent = new Event('close', { composed: true });
+        this.shadowRoot.dispatchEvent(closeEvent);
     }
 }
 

@@ -2,6 +2,9 @@ export class ThemeSelection extends HTMLElement {
 
     constructor() {
         super();
+        this.initializeButton = this.initializeButton.bind(this);
+        this.handleThemeButtonClick = this.handleThemeButtonClick.bind(this);
+
         this.attachShadow({ mode: 'open' }).innerHTML = `
             <style>
                @import url('/globals.css');
@@ -57,20 +60,30 @@ export class ThemeSelection extends HTMLElement {
 
         this.shadowRoot
             .querySelectorAll('.theme-button')
-            .forEach((themeButton) => {
-                if (initialTheme === themeButton.getAttribute('data-variant')) {
-                    themeButton.classList.add('active');
-                }
+            .forEach((themeButton) => this.initializeButton(themeButton, initialTheme));
+    }
 
-                themeButton.addEventListener('click', () => {
-                    /** @type {string} */
-                    const selectedTheme = themeButton.dataset.variant;
-                    document.documentElement.setAttribute('data-theme', selectedTheme);
-                    this.shadowRoot.querySelector('.theme-button.active').classList.remove('active');
-                    themeButton.classList.add('active');
-                    localStorage.setItem('theme', selectedTheme);
-                });
-            });
+    /**
+     * @param {HTMLButtonElement} themeButton
+     * @param {string} initialTheme
+     * */
+    initializeButton(themeButton, initialTheme) {
+        if (initialTheme === themeButton.getAttribute('data-variant')) {
+            themeButton.classList.add('active');
+        }
+        themeButton.addEventListener('click', this.handleThemeButtonClick);
+    }
+
+    /** @param {Event} e */
+    handleThemeButtonClick(e) {
+        /** @type {HTMLButtonElement} */
+        const themeButton = e.target;
+        /** @type {string} */
+        const selectedTheme = themeButton.dataset.variant;
+        document.documentElement.setAttribute('data-theme', selectedTheme);
+        this.shadowRoot.querySelector('.theme-button.active').classList.remove('active');
+        themeButton.classList.add('active');
+        localStorage.setItem('theme', selectedTheme);
     }
 }
 

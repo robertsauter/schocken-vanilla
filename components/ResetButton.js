@@ -5,7 +5,7 @@ export class ResetButton extends HTMLElement {
     constructor() {
         super();
 
-        this.handleReset = this.handleReset.bind(this);
+        this.handleResetButtonClick = this.handleResetButtonClick.bind(this);
 
         this.attachShadow({ mode: 'open' }).innerHTML = `
             <style>
@@ -53,10 +53,12 @@ export class ResetButton extends HTMLElement {
     }
 
     connectedCallback() {
-        this.shadowRoot.querySelector('.reset-button').addEventListener('click', this.handleReset);
+        this.shadowRoot
+            .querySelector('.reset-button')
+            .addEventListener('click', this.handleResetButtonClick);
     }
 
-    handleReset() {
+    handleResetButtonClick() {
         const bounceElement = this.shadowRoot.querySelector('.bounce-element');
         /** @type {HTMLButtonElement} */
         const resetButton = this.shadowRoot.querySelector('.reset-button');

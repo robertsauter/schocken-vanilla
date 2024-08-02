@@ -1,6 +1,8 @@
 export class RevealButton extends HTMLElement {
     constructor() {
         super();
+        this.handleRevealButtonClick = this.handleRevealButtonClick.bind(this);
+
         this.attachShadow({ mode: 'open' }).innerHTML = `
             <style>
                 @import url('/globals.css');
@@ -54,14 +56,20 @@ export class RevealButton extends HTMLElement {
 
     connectedCallback() {
         /** @type {HTMLButtonElement} */
-        const revealButton = this.shadowRoot.querySelector('.reveal-button');
-        revealButton.addEventListener('click', () => {
-            revealButton.classList.add('active');
-            setTimeout(() => {
-                const revealEvent = new Event('reveal', { composed: true });
-                this.shadowRoot.dispatchEvent(revealEvent);
-            }, 200);
-        });
+        this.shadowRoot
+            .querySelector('.reveal-button')
+            .addEventListener('click', this.handleRevealButtonClick);
+    }
+
+    /** @param {Event} e */
+    handleRevealButtonClick(e) {
+        /** @type {HTMLButtonElement} */
+        const revealButton = e.target;
+        revealButton.classList.add('active');
+        setTimeout(() => {
+            const revealEvent = new Event('reveal', { composed: true });
+            this.shadowRoot.dispatchEvent(revealEvent);
+        }, 200);
     }
 }
 

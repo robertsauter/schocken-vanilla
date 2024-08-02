@@ -2,6 +2,8 @@ export class SpecialModeSwitch extends HTMLElement {
 
     constructor() {
         super();
+        this.handleModeChange = this.handleModeChange.bind(this);
+
         this.attachShadow({ mode: 'open' }).innerHTML = `
             <style>
                 @import url('/globals.css');
@@ -51,16 +53,21 @@ export class SpecialModeSwitch extends HTMLElement {
     connectedCallback() {
         this.shadowRoot
             .querySelector('.special-mode-input')
-            .addEventListener('change', (e) => {
-                const switchElement = this.shadowRoot.querySelector('.switch');
-                if (e.target.checked) {
-                    switchElement.classList.add('active');
-                }
-                else {
-                    switchElement.classList.remove('active');
-                }
-                localStorage.setItem('specialMode', e.target.checked);
-            });
+            .addEventListener('change', this.handleModeChange);
+    }
+
+    /** @param {Event} e */
+    handleModeChange(e) {
+        /** @type {HTMLInputElement} */
+        const modeCheckbox = e.target;
+        const switchElement = this.shadowRoot.querySelector('.switch');
+        if (modeCheckbox.checked) {
+            switchElement.classList.add('active');
+        }
+        else {
+            switchElement.classList.remove('active');
+        }
+        localStorage.setItem('specialMode', modeCheckbox.checked);
     }
 }
 

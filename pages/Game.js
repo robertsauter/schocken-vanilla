@@ -90,9 +90,7 @@ export class Game extends HTMLElement {
     connectedCallback() {
         this.shadowRoot
             .querySelector('schocken-reset-button')
-            .addEventListener('reset', () => {
-                console.log('RESETTED!');
-            });
+            .addEventListener('reset', () => console.log('RESETTED!'));
 
         /** @type{HTMLDialogElement} */
         const dialog = this.shadowRoot.querySelector('.menu-dialog');

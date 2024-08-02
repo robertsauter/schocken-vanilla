@@ -10,3 +10,4 @@ import { ThemeSelection } from './components/menu/ThemeSelection.js';
 import { SpecialModeSwitch } from './components/menu/SpecialModeSwitch.js';
 import { Einsen } from './components/Einsen.js';
 import { RevealButton } from './components/RevealButton.js';
+import { Dices } from './components/Dices.js';
