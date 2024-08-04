@@ -11,6 +11,7 @@ export class Dices extends HTMLElement {
     constructor() {
         super();
         this.handleDicesClick = this.handleDicesClick.bind(this);
+        this.removeEinsen = this.removeEinsen.bind(this);
 
         this.attachShadow({ mode: 'open' }).innerHTML = `
             <style>
@@ -27,7 +28,12 @@ export class Dices extends HTMLElement {
                     border-style: none;
                     animation: appear 200ms;
                 }
-                
+                .dices-wrapper.without-dices {
+                    background-color: var(--theme-yellow);
+                    color: var(--theme-light);
+                    padding: 1rem 2rem;
+                    border-radius: 9999px;
+                }
                 .dices-wrapper.rotated {
                     opacity: 0;
                     transform: scale(0.75) rotate(45deg);
@@ -102,15 +108,31 @@ export class Dices extends HTMLElement {
         setTimeout(() => {
             const rollEvent = new Event('roll', { composed: true });
             this.shadowRoot.dispatchEvent(rollEvent);
-            this.shadowRoot.querySelector('.dices-wrapper').classList.remove('rotated');
+            const dicesWrapper = this.shadowRoot.querySelector('.dices-wrapper');
+            dicesWrapper.classList.remove('rotated');
+            dicesWrapper.classList.remove('without-dices');
         }, 200);
+    }
+
+    removeEinsen() {
+        const einsen = this.shadowRoot.querySelectorAll('.dice[data-value="1"]');
+        const sechsen = this.shadowRoot.querySelectorAll('.dice[data-value="6"]');
+        einsen.forEach((eins) => eins.remove());
+        if (sechsen.length > 1) {
+            sechsen.forEach((sechs) => sechs.remove());
+        }
+        if ((einsen.length + sechsen.length) === 3) {
+            const dicesWrapper = this.shadowRoot.querySelector('.dices-wrapper');
+            dicesWrapper.innerHTML = `Erneut würfeln`;
+            dicesWrapper.classList.add('without-dices');
+        }
     }
 
     /** @param {number} value */
     createDice(value) {
         switch (value) {
             case 1:
-                return `<div class="dice">
+                return `<div class="dice" data-value="1">
                     <div style="grid-column-start: 2" class="dot"></div>
                 </div>`;
             case 2:
@@ -140,7 +162,7 @@ export class Dices extends HTMLElement {
                     <div style="grid-column-start: 3; grid-row-start: 3" class="dot"></div>
                 </div>`;
             case 6:
-                return `<div class="dice">
+                return `<div class="dice" data-value="6">
                     <div class="dot"></div>
                     <div style="grid-column-start: 3" class="dot"></div>
                     <div style="grid-row-start: 2" class="dot"></div>

@@ -1,7 +1,13 @@
 export class Einsen extends HTMLElement {
 
-    /** @param {number} amount */
+    #dicesAmount = 0;
+
+    get dicesAmount() {
+        return this.#dicesAmount;
+    }
+
     set dicesAmount(amount) {
+        this.#dicesAmount = amount;
         let template = '';
         for (let i = 0; i < amount; i++) {
             template += `<div class="dice"><div class="dot"></div></div>`;
