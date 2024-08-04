@@ -1,11 +1,29 @@
 import { Dices } from '../components/Dices.js';
+import { RevealButton } from '../components/RevealButton.js';
 
 export class Game extends HTMLElement {
 
-    einsenAmount = 0;
+    #move = 1;
+
+    get move() {
+        return this.#move;
+    }
+
+    set move(move) {
+        this.#move = move;
+        this.shadowRoot.querySelector('.move').innerHTML = `${move}/3`;
+    }
+
+    /** @type {Array<number>} */
+    values = [];
 
     constructor() {
         super();
+        this.handleDiceRoll = this.handleDiceRoll.bind(this);
+        this.handleReveal = this.handleReveal.bind(this);
+        this.createValues = this.createValues.bind(this);
+        this.reset = this.reset.bind(this);
+
         this.attachShadow({ mode: 'open' }).innerHTML = `
             <style>
                 @import url('/globals.css');
@@ -28,7 +46,7 @@ export class Game extends HTMLElement {
                 .main-section {
                     height: 90%;
                 }
-                .reveal-button-wrapper {
+                .dices-wrapper {
                     height: 100%;
                     display: flex;
                     justify-content: center;
@@ -78,8 +96,9 @@ export class Game extends HTMLElement {
                         <span class="move">1/3</span>
                         <schocken-einsen></schocken-einsen>
                     </div>
-                    <div class="reveal-button-wrapper">
-                        <schocken-dices></schocken-dices>
+                    <div class="dices-wrapper">
+                        <schocken-reveal-button></schocken-reveal-button>
+                        <schocken-dices style="display: none"></schocken-dices>
                     </div>
                 </main>
                 <dialog class="menu-dialog">
@@ -90,10 +109,6 @@ export class Game extends HTMLElement {
     }
 
     connectedCallback() {
-        this.shadowRoot
-            .querySelector('schocken-reset-button')
-            .addEventListener('reset', () => console.log('RESETTED!'));
-
         /** @type{HTMLDialogElement} */
         const dialog = this.shadowRoot.querySelector('.menu-dialog');
 
@@ -107,11 +122,60 @@ export class Game extends HTMLElement {
 
         this.shadowRoot
             .querySelector('schocken-reveal-button')
-            ?.addEventListener('reveal', () => console.log('Revealed!'));
+            .addEventListener('reveal', this.handleReveal);
 
+        this.shadowRoot
+            .querySelector('schocken-dices')
+            .addEventListener('roll', this.handleDiceRoll);
+
+        this.shadowRoot
+            .querySelector('schocken-reset-button')
+            .addEventListener('reset', this.reset);
+    }
+
+    /** @param {Event} e */
+    handleReveal(e) {
+        /** @type {RevealButton} */
+        const revealButton = e.target;
+        revealButton.style.display = 'none';
         /** @type {Dices} */
         const dices = this.shadowRoot.querySelector('schocken-dices');
-        dices.dicesAmount = 3;
+        dices.style.display = 'initial';
+        this.createValues();
+        dices.values = this.values;
+    }
+
+    /** @param {Event} e */
+    handleDiceRoll(e) {
+        /** @type {Dices} */
+        const dices = e.target;
+        dices.style.display = 'none';
+        /** @type {RevealButton} */
+        const revealButton = this.shadowRoot.querySelector('schocken-reveal-button');
+        revealButton.style.display = 'initial';
+        this.move = this.move < 3 ? this.move + 1 : 1;
+    }
+
+    createValues() {
+        const amount = this.move === 1 ? 3 : this.values.length;
+        const values = [];
+        for (let i = 0; i < amount; i++) {
+            const min = Math.ceil(1);
+            const max = Math.floor(7);
+            const randomValue = Math.floor(Math.random() * (max - min) + min);
+            values.push(randomValue);
+        }
+        this.values = values;
+    }
+
+    reset() {
+        /** @type {RevealButton} */
+        const revealButton = this.shadowRoot.querySelector('schocken-reveal-button');
+        revealButton.style.display = 'initial';
+        /** @type {Dices} */
+        const dices = this.shadowRoot.querySelector('schocken-dices');
+        dices.style.display = 'none';
+        this.move = 1;
     }
 }
 

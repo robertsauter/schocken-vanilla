@@ -69,6 +69,7 @@ export class RevealButton extends HTMLElement {
         setTimeout(() => {
             const revealEvent = new Event('reveal', { composed: true });
             this.shadowRoot.dispatchEvent(revealEvent);
+            revealButton.classList.remove('active');
         }, 200);
     }
 }

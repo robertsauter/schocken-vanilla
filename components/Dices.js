@@ -1,23 +1,17 @@
 export class Dices extends HTMLElement {
 
-    /** @param {number} amount */
-    set dicesAmount(amount) {
+    /** @param {Array<number>} values */
+    set values(values) {
         let template = '';
-        for (let i = 0; i < amount; i++) {
-            const min = Math.ceil(1);
-            const max = Math.floor(7);
-            const randomValue = Math.floor(Math.random() * (max - min) + min);
-            console.log(randomValue);
-            const dice = this.createDice(randomValue);
-            template += dice;
-        }
+        values.forEach((value) => template += this.createDice(value));
         const dicesWrapper = this.shadowRoot.querySelector('.dices-wrapper');
         dicesWrapper.innerHTML = template;
-        dicesWrapper.classList.add('shown');
     }
 
     constructor() {
         super();
+        this.handleDicesClick = this.handleDicesClick.bind(this);
+
         this.attachShadow({ mode: 'open' }).innerHTML = `
             <style>
                 @import url('/globals.css');
@@ -28,13 +22,15 @@ export class Dices extends HTMLElement {
                     justify-content: center;
                     align-content: center;
                     flex-wrap: wrap;
-                    opacity: 0;
-                    transform: translateY(1rem);
                     transition: all 200ms;
+                    background-color: transparent;
+                    border-style: none;
+                    animation: appear 200ms;
                 }
-                .dices-wrapper.shown {
-                    opacity: 1;
-                    transform: translateY(0);
+                
+                .dices-wrapper.rotated {
+                    opacity: 0;
+                    transform: scale(0.75) rotate(45deg);
                 }
                 .dice {
                     width: 4rem;
@@ -79,9 +75,35 @@ export class Dices extends HTMLElement {
                         height: 1.5rem;
                     }
                 }
+
+                @keyframes appear {
+                    0% {
+                        transform: translateY(1rem);
+                        opacity: 0;
+                    }
+                    100% {
+                        transform: translateY(0);
+                        opacity: 1;
+                    }
+                } 
             </style> 
-            <div class="dices-wrapper"></div>
+            <button class="dices-wrapper"></button>
         `;
+    }
+
+    connectedCallback() {
+        this.shadowRoot
+            .querySelector('.dices-wrapper')
+            .addEventListener('click', this.handleDicesClick);
+    }
+
+    handleDicesClick() {
+        this.shadowRoot.querySelector('.dices-wrapper').classList.add('rotated');
+        setTimeout(() => {
+            const rollEvent = new Event('roll', { composed: true });
+            this.shadowRoot.dispatchEvent(rollEvent);
+            this.shadowRoot.querySelector('.dices-wrapper').classList.remove('rotated');
+        }, 200);
     }
 
     /** @param {number} value */
