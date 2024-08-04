@@ -44,23 +44,26 @@ export class Game extends HTMLElement {
                     align-items: center;
                     justify-content: space-between;
                     padding: 0 0.5rem;
+                    height: 12%;
                 }
                 .menu-button {
                     color: var(--theme-text);
                 }
                 .main-section {
-                    height: 90%;
+                    height: 88%;
                 }
                 .dices-wrapper {
                     display: flex;
                     justify-content: center;
                     align-items: center; 
+                    height: 75%;
                 }
                 .game-state-wrapper {
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
                     padding: 0 1.5rem;
+                    height: 10%;
                 }
                 .move {
                     font-size: 1.5rem;
@@ -75,6 +78,9 @@ export class Game extends HTMLElement {
                     left: 0;
                     margin: 0;
                     padding: 0;
+                }
+                .rauslegen-button-wrapper {
+                    padding: 1rem;
                 }
 
                 @media(min-width: 640px) {
@@ -104,7 +110,9 @@ export class Game extends HTMLElement {
                         <schocken-reveal-button></schocken-reveal-button>
                         <schocken-dices style="display: none"></schocken-dices>
                     </div>
-                    <schocken-rauslegen-button style="display: none"></schocken-rauslegen-button>
+                    <div class="rauslegen-button-wrapper">
+                        <schocken-rauslegen-button style="display: none"></schocken-rauslegen-button>
+                    </div>
                 </main>
                 <dialog class="menu-dialog">
                     <schocken-menu></schocken-menu>

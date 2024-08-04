@@ -2,6 +2,8 @@ export class RauslegenButton extends HTMLElement {
 
     constructor() {
         super();
+        this.handleRauslegenButtonClick = this.handleRauslegenButtonClick.bind(this);
+
         this.attachShadow({ mode: 'open' }).innerHTML = `
             <style>
                 @import url('/globals.css');
@@ -18,6 +20,11 @@ export class RauslegenButton extends HTMLElement {
                     align-items: center;
                     width: 100%;
                     padding: 1rem 1rem;
+                    animation: appear 200ms;
+                }
+                .rauslegen-button.disappear {
+                    animation: disappear 200ms;
+                    transform: translateY(100%);
                 }
                 .arrow-icon {
                     width: 1.5rem;
@@ -33,6 +40,33 @@ export class RauslegenButton extends HTMLElement {
                         height: 2rem;
                     }
                 }
+
+                @keyframes appear {
+                    0% {
+                        transform: translateY(100%);
+                    }
+                    70% {
+                        transform: translateY(-20%);
+                    }
+                    85% {
+                        transform: translateY(-10%);
+                    }
+                    100% {
+                        transform: translateY(0);
+                    }
+                }
+
+                @keyframes disappear {
+                    0% {
+                        transform: translateY(0);
+                    }
+                    30% {
+                        transform: translateY(-20%);
+                    }
+                    100% {
+                        transform: translateY(100%);
+                    }
+                }
             </style>
             <button class="rauslegen-button">
                 <span>Einsen rauslegen</span>
@@ -44,13 +78,22 @@ export class RauslegenButton extends HTMLElement {
     }
 
     connectedCallback() {
-        this.shadowRoot.querySelector('.rauslegen-button').addEventListener('click', () => {
-            const rauslegenEvent = new Event('rauslegen', { composed: true });
-            this.shadowRoot.dispatchEvent(rauslegenEvent);
-        });
+        this.shadowRoot
+            .querySelector('.rauslegen-button')
+            .addEventListener('click', this.handleRauslegenButtonClick);
     }
 
-
+    /** @param {Event} e */
+    handleRauslegenButtonClick(e) {
+        /** @type {HTMLButtonElement} */
+        const rauslegenButton = e.currentTarget;
+        rauslegenButton.classList.add('disappear');
+        setTimeout(() => {
+            const rauslegenEvent = new Event('rauslegen', { composed: true });
+            this.shadowRoot.dispatchEvent(rauslegenEvent);
+            rauslegenButton.classList.remove('disappear');
+        }, 200);
+    }
 }
 
 customElements.define('schocken-rauslegen-button', RauslegenButton);
