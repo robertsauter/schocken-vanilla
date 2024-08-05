@@ -16,6 +16,7 @@ export class ThemeSelection extends HTMLElement {
                     gap: 1rem;
                     border-radius: 1.5rem;
                     padding: 1rem;
+                    animation: fadeIn 200ms;
                 }
                 .theme-button {
                     border-width: 4px;
@@ -42,6 +43,17 @@ export class ThemeSelection extends HTMLElement {
                 @media (min-width: 640) {
                     .menu-button-wrapper {
                         padding: 0 4rem;
+                    }
+                }
+
+                @keyframes fadeIn {
+                    0% {
+                        opacity: 0;
+                        transform: translateY(-0.5rem);
+                    }
+                    100% {
+                        opacity: 1;
+                        transform: translateY(0);
                     }
                 }
             </style>

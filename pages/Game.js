@@ -78,6 +78,7 @@ export class Game extends HTMLElement {
                     left: 0;
                     margin: 0;
                     padding: 0;
+                    background-color: transparent;
                 }
                 .rauslegen-button-wrapper {
                     padding: 1rem;

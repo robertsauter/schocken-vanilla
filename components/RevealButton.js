@@ -36,6 +36,7 @@ export class RevealButton extends HTMLElement {
                         width: 100%;
                         height: 100%;
                         font-size: 6rem;
+                        padding: 3rem;
                     }
                 }
 

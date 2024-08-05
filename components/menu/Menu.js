@@ -12,14 +12,18 @@ export class Menu extends HTMLElement {
                     width: 100%;
                     height: 100%;
                     background-color: var(--theme-menu-background);
-                    opacity: 90%;
                     backdrop-filter: blur(8px);
-                    transition: background-color 200ms;
+                    transition: all 200ms;
+                    animation: fadeIn 200ms;
+                }
+                .menu-wrapper.fade-out {
+                    opacity: 0;
                 }
                 .menu-button-wrapper {
                     display: flex;
                     justify-content: end;
                     padding: 0 0.5rem;
+                    height: 12%;
                 }
                 .menu-button .menu-button-icon {
                     color: var(--theme-menu-text);
@@ -30,6 +34,11 @@ export class Menu extends HTMLElement {
                     align-items: center;
                     padding: 2.5rem;
                     gap: 2rem;
+                    animation: slideIn 200ms;
+                    transition: all 200ms;
+                }
+                .main-menu.slideOut {
+                    transform: translateY(0.25rem);
                 }
                 .menu-item {
                     width: 100%;
@@ -38,6 +47,24 @@ export class Menu extends HTMLElement {
                 @media(min-width: 640) {
                     .menu-button-wrapper {
                         padding: 0 4rem;
+                    }
+                }
+
+                @keyframes fadeIn {
+                    0% {
+                        opacity: 0;
+                    }
+                    100% {
+                        opacity: 1;
+                    }
+                }
+
+                @keyframes slideIn {
+                    0% {
+                        transform: translateY(0.25rem);
+                    }
+                    100% {
+                        transform: translateY(0);
                     }
                 }
             </style>
@@ -74,8 +101,15 @@ export class Menu extends HTMLElement {
     }
 
     handleCloseButtonClick() {
-        const closeEvent = new Event('close', { composed: true });
-        this.shadowRoot.dispatchEvent(closeEvent);
+        this.shadowRoot.querySelector('.menu-wrapper').classList.add('fade-out');
+        this.shadowRoot.querySelector('.main-menu').classList.add('slideOut');
+
+        setTimeout(() => {
+            const closeEvent = new Event('close', { composed: true });
+            this.shadowRoot.dispatchEvent(closeEvent);
+            this.shadowRoot.querySelector('.menu-wrapper').classList.remove('fade-out');
+            this.shadowRoot.querySelector('.main-menu').classList.remove('slideOut');
+        }, 200);
     }
 }
 

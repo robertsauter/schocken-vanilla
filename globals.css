@@ -1,5 +1,5 @@
 html {
-    font-family: Arial, sans-serif;
+    font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
 
     --theme-yellow: #ffb703;
     --theme-dark-blue: #023047;
@@ -12,7 +12,7 @@ html {
     --theme-background: var(--theme-light);
     --theme-text: var(--theme-dark);
 
-    --theme-menu-background: var(--theme-dark-blue);
+    --theme-menu-background: rgba(2, 48, 71, 0.9);
     --theme-menu-text: var(--theme-light);
 
     --theme-switch: lightgray;
@@ -25,7 +25,7 @@ html {
     --theme-background: var(--theme-dark-blue);
     --theme-text: var(--theme-light);
 
-    --theme-menu-background: var(--theme-light);
+    --theme-menu-background: rgba(255, 255, 255, 0.9);
     --theme-menu-text: var(--theme-dark-blue);
 
     --theme-switch: gray;
@@ -40,6 +40,7 @@ body {
 
 button {
     font-size: 1rem;
+    font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
 }
 
 li {

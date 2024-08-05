@@ -14,24 +14,28 @@ export class SpecialModeSwitch extends HTMLElement {
                     gap: 0.5rem;
                 }
                 .switch {
-                    display: flex;
-                    align-items: center;
-                    justify-content: start;
                     border-radius: 9999px;
-                    padding: 0.25rem;
                     background-color: var(--theme-switch);
                     transition: all 200ms;
-                    width: 3.5rem;
+                    width: 4rem;
+                    height: 2rem;
+                    position: relative;
                 }
                 .switch.active {
-                    justify-content: end;
                     background-color: var(--theme-switch-active);
                 }
                 .slider {
+                    position: absolute;
+                    top: 0.25rem;
+                    left: 0.25rem;
                     border-radius: 9999px;
                     width: 1.5rem;
                     height: 1.5rem;
                     background-color: var(--theme-menu-background);
+                    transition: all 200ms;
+                }
+                .switch.active .slider {
+                    left: 2.25rem
                 }
 
                 @media(min-width: 640px) {
