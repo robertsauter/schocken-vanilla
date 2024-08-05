@@ -2,6 +2,8 @@ import { Dices } from '../components/Dices.js';
 import { RauslegenButton } from '../components/RauslegenButton.js';
 import { RevealButton } from '../components/RevealButton.js';
 import { Einsen } from '../components/Einsen.js';
+import { storeService } from '../services/StoreService.js';
+import { FunnyLines } from '../components/FunnyLines.js';
 
 export class Game extends HTMLElement {
 
@@ -18,6 +20,8 @@ export class Game extends HTMLElement {
 
     /** @type {Array<number>} */
     values = [];
+
+    specialMode = false;
 
     constructor() {
         super();
@@ -38,6 +42,7 @@ export class Game extends HTMLElement {
                     height: 100vh;
                     background-color: var(--theme-background);
                     color: var(--theme-text);
+                    overflow: hidden;
                 }
                 .buttons-wrapper {
                     display: flex;
@@ -52,11 +57,19 @@ export class Game extends HTMLElement {
                 .main-section {
                     height: 88%;
                 }
+                .funny-lines-wrapper {
+                    max-height: 10%;
+                    height: 10%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 0 1.5rem;
+                } 
                 .dices-wrapper {
                     display: flex;
                     justify-content: center;
                     align-items: center; 
-                    height: 75%;
+                    height: 65%;
                 }
                 .game-state-wrapper {
                     display: flex;
@@ -107,6 +120,7 @@ export class Game extends HTMLElement {
                         <span class="move">1/3</span>
                         <schocken-einsen></schocken-einsen>
                     </div>
+                    <div class="funny-lines-wrapper"></div>
                     <div class="dices-wrapper">
                         <schocken-reveal-button></schocken-reveal-button>
                         <schocken-dices style="display: none"></schocken-dices>
@@ -149,6 +163,8 @@ export class Game extends HTMLElement {
         this.shadowRoot
             .querySelector('schocken-rauslegen-button')
             .addEventListener('rauslegen', this.einsenRauslegen);
+
+        storeService.specialMode$.observe((active) => this.specialMode = active);
     }
 
     /** @param {Event} e */
@@ -175,6 +191,11 @@ export class Game extends HTMLElement {
         else {
             rauslegenButton.style.display = 'none';
         }
+
+        if (this.specialMode) {
+            const funnyLines = new FunnyLines(this.values, this.move);
+            this.shadowRoot.querySelector('.funny-lines-wrapper').appendChild(funnyLines);
+        }
     }
 
     handleDiceRoll() {
@@ -189,6 +210,8 @@ export class Game extends HTMLElement {
         /** @type {RauslegenButton} */
         const rauslegenButton = this.shadowRoot.querySelector('schocken-rauslegen-button');
         rauslegenButton.style.display = 'none';
+
+        this.shadowRoot.querySelector('.funny-lines-wrapper').innerHTML = ``;
     }
 
     hideDices() {
@@ -220,6 +243,7 @@ export class Game extends HTMLElement {
         /** @type {RauslegenButton} */
         const rauslegenButton = this.shadowRoot.querySelector('schocken-rauslegen-button');
         rauslegenButton.style.display = 'none';
+        this.shadowRoot.querySelector('.funny-lines-wrapper').innerHTML = ``;
     }
 
     resetEinsen() {

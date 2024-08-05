@@ -1,3 +1,5 @@
+import { storeService } from '../../services/StoreService.js';
+
 export class SpecialModeSwitch extends HTMLElement {
 
     constructor() {
@@ -16,7 +18,6 @@ export class SpecialModeSwitch extends HTMLElement {
                 .switch {
                     border-radius: 9999px;
                     background-color: var(--theme-switch);
-                    transition: all 200ms;
                     width: 4rem;
                     height: 2rem;
                     position: relative;
@@ -32,7 +33,7 @@ export class SpecialModeSwitch extends HTMLElement {
                     width: 1.5rem;
                     height: 1.5rem;
                     background-color: var(--theme-menu-background);
-                    transition: all 200ms;
+                    transition: all 75ms ease-in;
                 }
                 .switch.active .slider {
                     left: 2.25rem
@@ -55,15 +56,20 @@ export class SpecialModeSwitch extends HTMLElement {
     }
 
     connectedCallback() {
-        this.shadowRoot
-            .querySelector('.special-mode-input')
-            .addEventListener('change', this.handleModeChange);
+        /** @type {HTMLInputElement} */
+        const specialModeInput = this.shadowRoot.querySelector('.special-mode-input');
+        specialModeInput.addEventListener('change', this.handleModeChange);
+
+        const specialMode = localStorage.getItem('specialMode') === 'true';
+        if (specialMode) {
+            specialModeInput.checked = true;
+            this.handleModeChange();
+        }
     }
 
-    /** @param {Event} e */
-    handleModeChange(e) {
+    handleModeChange() {
         /** @type {HTMLInputElement} */
-        const modeCheckbox = e.target;
+        const modeCheckbox = this.shadowRoot.querySelector('.special-mode-input')
         const switchElement = this.shadowRoot.querySelector('.switch');
         if (modeCheckbox.checked) {
             switchElement.classList.add('active');
@@ -72,6 +78,8 @@ export class SpecialModeSwitch extends HTMLElement {
             switchElement.classList.remove('active');
         }
         localStorage.setItem('specialMode', modeCheckbox.checked);
+
+        storeService.specialMode$.emit(modeCheckbox.checked);
     }
 }
 

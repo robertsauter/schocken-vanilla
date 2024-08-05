@@ -12,3 +12,4 @@ import { Einsen } from './components/Einsen.js';
 import { RevealButton } from './components/RevealButton.js';
 import { Dices } from './components/Dices.js';
 import { RauslegenButton } from './components/RauslegenButton.js';
+import { FunnyLines } from './components/FunnyLines.js';

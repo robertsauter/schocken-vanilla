@@ -84,14 +84,16 @@ export class Dices extends HTMLElement {
 
                 @keyframes appear {
                     0% {
-                        transform: translateY(1rem);
+                        transform: translateY(1rem) scale(0.9);
                         opacity: 0;
                     }
-                    100% {
-                        transform: translateY(0);
-                        opacity: 1;
+                    80% {
+                        opacity: 1
                     }
-                } 
+                    100% {
+                        transform: translateY(0) scale(1);
+                    }
+                }
             </style> 
             <button class="dices-wrapper"></button>
         `;
@@ -130,31 +132,34 @@ export class Dices extends HTMLElement {
 
     /** @param {number} value */
     createDice(value) {
+        const rotationValues = [0, 1, 2, 3, 6, 12, 45];
+        const randomRotation = rotationValues[Math.floor(Math.random() * rotationValues.length)];
+
         switch (value) {
             case 1:
-                return `<div class="dice" data-value="1">
+                return `<div style="transform: rotate(${randomRotation}deg)" class="dice" data-value="1">
                     <div style="grid-column-start: 2" class="dot"></div>
                 </div>`;
             case 2:
-                return `<div class="dice">
+                return `<div style="transform: rotate(${randomRotation}deg)" class="dice">
                     <div style="grid-column-start: 3" class="dot"></div>
                     <div style="grid-row-start: 3" class="dot"></div>
                 </div>`;
             case 3:
-                return `<div class="dice">
+                return `<div style="transform: rotate(${randomRotation}deg)" class="dice">
                     <div style="grid-column-start: 3" class="dot"></div>
                     <div style="grid-column-start: 2; grid-row-start: 2" class="dot"></div>
                     <div style="grid-row-start: 3" class="dot"></div>
                 </div>`;
             case 4:
-                return `<div class="dice">
+                return `<div style="transform: rotate(${randomRotation}deg)" class="dice">
                     <div class="dot"></div>
                     <div style="grid-column-start: 3" class="dot"></div>
                     <div style="grid-row-start: 3" class="dot"></div>
                     <div style="grid-column-start: 3; grid-row-start: 3" class="dot"></div>
                 </div>`;
             case 5:
-                return `<div class="dice">
+                return `<div style="transform: rotate(${randomRotation}deg)" class="dice">
                     <div class="dot"></div>
                     <div style="grid-column-start: 3" class="dot"></div>
                     <div style="grid-column-start: 2; grid-row-start: 2" class="dot"></div>
@@ -162,7 +167,7 @@ export class Dices extends HTMLElement {
                     <div style="grid-column-start: 3; grid-row-start: 3" class="dot"></div>
                 </div>`;
             case 6:
-                return `<div class="dice" data-value="6">
+                return `<div style="transform: rotate(${randomRotation}deg)" class="dice" data-value="6">
                     <div class="dot"></div>
                     <div style="grid-column-start: 3" class="dot"></div>
                     <div style="grid-row-start: 2" class="dot"></div>
