@@ -177,7 +177,7 @@ export class Game extends HTMLElement {
         const dices = this.shadowRoot.querySelector('schocken-dices');
         dices.style.display = 'initial';
 
-        this.createValues();
+        this.values = this.createValues();
         dices.values = this.values;
 
         /** @type {RauslegenButton} */
@@ -187,9 +187,6 @@ export class Game extends HTMLElement {
         const containsEinsenOrSechsen = this.values.includes(1) || sechsenAmount > 1;
         if (containsEinsenOrSechsen && this.move < 3 && isNotSchockOut) {
             rauslegenButton.style.display = 'initial';
-        }
-        else {
-            rauslegenButton.style.display = 'none';
         }
 
         if (this.specialMode) {
@@ -233,7 +230,7 @@ export class Game extends HTMLElement {
             const randomValue = Math.floor(Math.random() * (max - min) + min);
             values.push(randomValue);
         }
-        this.values = values;
+        return values;
     }
 
     reset() {
@@ -244,6 +241,7 @@ export class Game extends HTMLElement {
         const rauslegenButton = this.shadowRoot.querySelector('schocken-rauslegen-button');
         rauslegenButton.style.display = 'none';
         this.shadowRoot.querySelector('.funny-lines-wrapper').innerHTML = ``;
+        this.values = [];
     }
 
     resetEinsen() {

@@ -132,7 +132,7 @@ export class Dices extends HTMLElement {
 
     /** @param {number} value */
     createDice(value) {
-        const rotationValues = [0, 1, 2, 3, 6, 12, 45];
+        const rotationValues = [0, 1, 2, 3, 6, 12, 45, -1, -2, -3, -6, -12, -45];
         const randomRotation = rotationValues[Math.floor(Math.random() * rotationValues.length)];
 
         switch (value) {
