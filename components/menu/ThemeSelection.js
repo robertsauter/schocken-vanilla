@@ -1,5 +1,10 @@
 export class ThemeSelection extends HTMLElement {
 
+    themeColors = {
+        light: '#FFFFFF',
+        dark: '#023047'
+    };
+
     constructor() {
         super();
         this.initializeButton = this.initializeButton.bind(this);
@@ -69,6 +74,10 @@ export class ThemeSelection extends HTMLElement {
         const initialTheme = savedTheme ?? 'light';
         document.documentElement.setAttribute('data-theme', initialTheme);
 
+        const themeColorMeta = document.createElement('meta');
+        themeColorMeta.setAttribute('name', 'theme-color');
+        themeColorMeta.setAttribute('content', this.themeColors[initialTheme]);
+        document.querySelector('head').appendChild(themeColorMeta);
 
         this.shadowRoot
             .querySelectorAll('.theme-button')
@@ -96,6 +105,8 @@ export class ThemeSelection extends HTMLElement {
         this.shadowRoot.querySelector('.theme-button.active').classList.remove('active');
         themeButton.classList.add('active');
         localStorage.setItem('theme', selectedTheme);
+
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', this.themeColors[selectedTheme]);
     }
 }
 
