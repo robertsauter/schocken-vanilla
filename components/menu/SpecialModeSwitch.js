@@ -5,6 +5,7 @@ export class SpecialModeSwitch extends HTMLElement {
     constructor() {
         super();
         this.handleModeChange = this.handleModeChange.bind(this);
+        this.handleLabelEnter = this.handleLabelEnter.bind(this);
 
         this.attachShadow({ mode: 'open' }).innerHTML = `
             <style>
@@ -45,9 +46,9 @@ export class SpecialModeSwitch extends HTMLElement {
                     }
                 }
             </style>
-            <label class="switch-wrapper">
+            <label tabindex="0" for="specialModeInput" class="switch-wrapper">
                 <span class="menu-title">Spezial Modus</span>
-                <input class="special-mode-input" name="special-mode" hidden type="checkbox" />
+                <input id="specialModeInput" class="special-mode-input" name="special-mode" hidden type="checkbox" />
                 <div class="switch">
                     <div class="slider"></div>
                 </div>
@@ -60,6 +61,10 @@ export class SpecialModeSwitch extends HTMLElement {
         const specialModeInput = this.shadowRoot.querySelector('.special-mode-input');
         specialModeInput.addEventListener('change', this.handleModeChange);
 
+        /** @type {HTMLLabelElement} */
+        const specialModeLabel = this.shadowRoot.querySelector('.switch-wrapper');
+        specialModeLabel.addEventListener('keyup', this.handleLabelEnter);
+
         const specialMode = localStorage.getItem('specialMode') === 'true';
         if (specialMode) {
             specialModeInput.checked = true;
@@ -67,9 +72,19 @@ export class SpecialModeSwitch extends HTMLElement {
         }
     }
 
+    /** @param {KeyboardEvent} e */
+    handleLabelEnter(e) {
+        if (e.key === ' ' || e.key === 'Enter') {
+            /** @type {HTMLInputElement} */
+            const modeCheckbox = this.shadowRoot.querySelector('.special-mode-input');
+            modeCheckbox.checked = !modeCheckbox.checked;
+            this.handleModeChange();
+        }
+    }
+
     handleModeChange() {
         /** @type {HTMLInputElement} */
-        const modeCheckbox = this.shadowRoot.querySelector('.special-mode-input')
+        const modeCheckbox = this.shadowRoot.querySelector('.special-mode-input');
         const switchElement = this.shadowRoot.querySelector('.switch');
         if (modeCheckbox.checked) {
             switchElement.classList.add('active');

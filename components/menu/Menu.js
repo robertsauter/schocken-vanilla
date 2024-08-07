@@ -2,7 +2,8 @@ export class Menu extends HTMLElement {
 
     constructor() {
         super();
-        this.handleCloseButtonClick = this.handleCloseButtonClick.bind(this);
+        this.close = this.close.bind(this);
+        this.handleEscapePress = this.handleEscapePress.bind(this);
 
         this.attachShadow({ mode: 'open' }).innerHTML = `
             <style>
@@ -70,7 +71,7 @@ export class Menu extends HTMLElement {
             </style>
             <div class="menu-wrapper">
                 <div class="menu-button-wrapper">
-                    <button class="menu-button close-menu-button">
+                    <button aria-label="Close menu button" class="menu-button close-menu-button">
                         <svg class="menu-button-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                         </svg>
@@ -97,10 +98,19 @@ export class Menu extends HTMLElement {
     connectedCallback() {
         this.shadowRoot
             .querySelector('.close-menu-button')
-            .addEventListener('click', this.handleCloseButtonClick);
+            .addEventListener('click', this.close);
+
+        document.addEventListener('keyup', this.handleEscapePress);
     }
 
-    handleCloseButtonClick() {
+    /** @param {KeyboardEvent} e */
+    handleEscapePress(e) {
+        if (e.key === 'Escape') {
+            this.close();
+        }
+    }
+
+    close() {
         this.shadowRoot.querySelector('.menu-wrapper').classList.add('fade-out');
         this.shadowRoot.querySelector('.main-menu').classList.add('slideOut');
 
