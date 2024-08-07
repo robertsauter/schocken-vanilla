@@ -123,8 +123,8 @@ export class Dices extends HTMLElement {
         if (sechsen.length > 1) {
             sechsen.forEach((sechs) => sechs.remove());
         }
-        if ((einsen.length + sechsen.length) === 3) {
-            const dicesWrapper = this.shadowRoot.querySelector('.dices-wrapper');
+        const dicesWrapper = this.shadowRoot.querySelector('.dices-wrapper');
+        if (!dicesWrapper.hasChildNodes()) {
             dicesWrapper.innerHTML = `Erneut würfeln`;
             dicesWrapper.classList.add('without-dices');
         }
