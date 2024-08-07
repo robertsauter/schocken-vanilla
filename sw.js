@@ -1,5 +1,7 @@
+const CACHE_VERSION = 'v2'
+
 async function addResourcesToCache(resources) {
-    const cache = await caches.open('v1');
+    const cache = await caches.open(CACHE_VERSION);
     await cache.addAll(resources);
 }
 
@@ -14,8 +16,18 @@ async function cacheFirst(request) {
 }
 
 async function putInCache(request, response) {
-    const cache = await caches.open('v1');
+    const cache = await caches.open(CACHE_VERSION);
     await cache.put(request, response);
+}
+
+async function deleteCache(key) {
+    await caches.delete(key);
+}
+
+async function deleteOldCaches() {
+    const keyList = await caches.keys();
+    const cachesToDelete = keyList.filter((key) => key !== CACHE_VERSION);
+    await Promise.all(cachesToDelete.map(deleteCache));
 }
 
 self.addEventListener('install', (e) => {
@@ -48,9 +60,14 @@ self.addEventListener('install', (e) => {
             '/assets/icons/512.png',
             '/assets/icons/1024.png',
             '/assets/screenshots/screenshot1.png',
-            '/assets/screenshots/screenshot2.png'
+            '/assets/screenshots/screenshot2.png',
+            '/Rubik-VariableFont_wght.ttf'
         ])
     );
+});
+
+self.addEventListener('activate', (e) => {
+    e.waitUntil(deleteOldCaches());
 });
 
 self.addEventListener('fetch', (e) => {

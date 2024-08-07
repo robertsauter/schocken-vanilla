@@ -1,5 +1,10 @@
+@font-face {
+    font-family: "Rubik";
+    src: url("/Rubik-VariableFont_wght.ttf");
+}
+
 html {
-    font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
+    font-family: Rubik, "Trebuchet MS", Verdana, Arial, sans-serif;
 
     --theme-yellow: #ffb703;
     --theme-dark-blue: #023047;
@@ -40,7 +45,7 @@ body {
 
 button {
     font-size: 1rem;
-    font-family: "Trebuchet MS", Verdana, Arial, sans-serif;
+    font-family: Rubik, "Trebuchet MS", Verdana, Arial, sans-serif;
 }
 
 li {
