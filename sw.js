@@ -1,4 +1,29 @@
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
+
+const ASSETS = [
+    '/',
+    '/index.html',
+    '/globals.css',
+    '/favicon.ico',
+    '/manifest.json',
+    '/Components.js',
+    '/App.js',
+    '/services/StoreService.js',
+    '/pages/Game.js',
+    '/lib/Observable.js',
+    '/impressum/index.html',
+    '/components/menu/Menu.js',
+    '/components/menu/SpecialModeSwitch.js',
+    '/components/menu/ThemeSelection.js',
+    '/components/Dices.js',
+    '/components/Einsen.js',
+    '/components/FunnyLines.js',
+    '/components/RauslegenButton.js',
+    '/components/ResetButton.js',
+    '/components/RevealButton.js',
+    '/assets/icons/180.png',
+    '/Rubik-VariableFont_wght.woff2'
+];
 
 async function addResourcesToCache(resources) {
     const cache = await caches.open(CACHE_VERSION);
@@ -11,7 +36,11 @@ async function cacheFirst(request) {
         return responseFromCache;
     }
     const responseFromNetwork = await fetch(request);
-    putInCache(request, responseFromNetwork.clone());
+    console.log(responseFromNetwork)
+    const isInAssets = ASSETS.some((asset) => responseFromNetwork.url.includes(asset));
+    if (isInAssets) {
+        putInCache(request, responseFromNetwork.clone());
+    }
     return responseFromNetwork;
 }
 
@@ -32,30 +61,7 @@ async function deleteOldCaches() {
 
 self.addEventListener('install', (e) => {
     e.waitUntil(
-        addResourcesToCache([
-            '/',
-            '/index.html',
-            '/globals.css',
-            '/favicon.ico',
-            '/manifest.json',
-            '/Components.js',
-            '/App.js',
-            '/services/StoreService.js',
-            '/pages/Game.js',
-            '/lib/Observable.js',
-            '/impressum/index.html',
-            '/components/menu/Menu.js',
-            '/components/menu/SpecialModeSwitch.js',
-            '/components/menu/ThemeSelection.js',
-            '/components/Dices.js',
-            '/components/Einsen.js',
-            '/components/FunnyLines.js',
-            '/components/RauslegenButton.js',
-            '/components/ResetButton.js',
-            '/components/RevealButton.js',
-            '/assets/icons/180.png',
-            '/Rubik-VariableFont_wght.woff2'
-        ])
+        addResourcesToCache(ASSETS)
     );
 });
 
