@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v1';
 
 const ASSETS = [
     '/',
@@ -36,8 +36,7 @@ async function cacheFirst(request) {
         return responseFromCache;
     }
     const responseFromNetwork = await fetch(request);
-    console.log(responseFromNetwork)
-    const isInAssets = ASSETS.some((asset) => responseFromNetwork.url.includes(asset));
+    const isInAssets = ASSETS.some((asset) => responseFromNetwork.clone().url.includes(asset));
     if (isInAssets) {
         putInCache(request, responseFromNetwork.clone());
     }
