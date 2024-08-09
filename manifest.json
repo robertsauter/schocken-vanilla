@@ -1,10 +1,16 @@
 {
+    "id": "/",
     "name": "Schocken Würfelbecher",
     "short_name": "Schocken",
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "start_url": "/",
     "display": "standalone",
+    "orientation": "portrait-primary",
+    "handle_links": "preferred",
+    "dir": "ltr",
+    "lang": "de",
+    "scope": "https://schockout.vercel.app",
     "description": "Der digitale Würfelbecher fürs Schocken: Ihr wollt Schocken spielen, aber habt nicht genug Würfel? Benutzt einfach die Schocken App!",
     "categories": [
         "entertainment",
