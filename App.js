@@ -13,9 +13,7 @@ export class App extends HTMLElement {
     async registerServiceWorker() {
         if ('serviceWorker' in navigator) {
             try {
-                navigator.serviceWorker.register('/sw.js').then((registration) => {
-                    console.log(registration);
-                });
+                navigator.serviceWorker.register('/sw.js');
             }
             catch (error) {
                 console.error('Service worker registration failed');

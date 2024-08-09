@@ -54,14 +54,7 @@ self.addEventListener('install', (e) => {
             '/components/ResetButton.js',
             '/components/RevealButton.js',
             '/assets/icons/180.png',
-            '/assets/icons/192.png',
-            '/assets/icons/384.png',
-            '/assets/icons/512-maskable.png',
-            '/assets/icons/512.png',
-            '/assets/icons/1024.png',
-            '/assets/screenshots/screenshot1.png',
-            '/assets/screenshots/screenshot2.png',
-            '/Rubik-VariableFont_wght.ttf'
+            '/Rubik-VariableFont_wght.woff2'
         ])
     );
 });
