@@ -10,6 +10,12 @@ export class App extends HTMLElement {
         this.registerServiceWorker();
     }
 
+    connectedCallback() {
+        window.screen.orientation
+            .lock('portrait-primary')
+            .catch(e => console.error(e));
+    }
+
     async registerServiceWorker() {
         if ('serviceWorker' in navigator) {
             try {
