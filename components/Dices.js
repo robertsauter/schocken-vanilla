@@ -27,6 +27,8 @@ export class Dices extends HTMLElement {
                     background-color: transparent;
                     border-style: none;
                     animation: appear 200ms;
+                    background-color: transparent;
+                    padding: 0;
                 }
                 .dices-wrapper.without-dices {
                     background-color: var(--theme-yellow);
