@@ -43,6 +43,8 @@ html {
 body {
     margin: 0;
     overscroll-behavior-y: contain;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 button {
