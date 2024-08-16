@@ -1,0 +1,9 @@
+[{
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target" : { "namespace": "android_app", "package_name": "app.vercel.schocken.twa",
+                     "sha256_cert_fingerprints": [
+                        "D4:43:67:F5:BF:F9:F9:84:B5:3A:16:05:AB:9B:D5:D0:23:7D:D7:C3:80:27:41:6F:45:E0:A6:2F:1C:59:0E:CD",
+                        "D7:0C:4F:07:82:26:EB:BB:53:CB:39:17:19:9C:75:86:C9:CA:91:78:42:82:7A:6D:D3:3B:9C:80:2A:2A:14:AB"
+                        ] }
+      }
+]
